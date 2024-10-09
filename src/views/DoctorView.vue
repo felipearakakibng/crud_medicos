@@ -2,40 +2,53 @@
 import { reactive, ref } from 'vue'
 import DoctorForm from '../components/DoctorForm.vue'
 
+interface Doctor {
+  nome: string
+  crm: number
+  estado: string
+  situacao: string
+}
 
-const doctors = ref(
+let id = 0
+let doctors: Doctor[] = ref(
   [
     {
+      id: id++,
       nome: "Antônio Silva",
       crm: 123456,
       estado: 'SP',
       situacao: 'Ativo'
     },
     {
+      id: id++,
       nome: "Juliana Cardos",
       crm: 222222,
       estado: 'RJ',
       situacao: 'Inativo'
     },
     {
+      id: id++,
       nome: "Helena Couto",
       crm: 333333,
       estado: 'BA',
       situacao: 'Ativo'
     },
     {
+      id: id++,
       nome: "Eduardo Prado",
       crm: 444444,
       estado: 'CE',
       situacao: 'Inativo'
     },
     {
+      id: id++,
       nome: "Maria Laura",
       crm: 555555,
       estado: 'MA',
       situacao: 'Ativo'
     },
     {
+      id: id++,
       nome: "Pedro Arantes",
       crm: 777777,
       estado: 'SC',
@@ -44,6 +57,7 @@ const doctors = ref(
   ]
 )
 
+// Abordar edit
 const action = ref("Adicionar")
 
 const doctor = reactive(
@@ -54,6 +68,19 @@ const doctor = reactive(
     situacao: ""
   }
 )
+
+function addDoctor(obj) {
+  doctors.value.push(obj)
+}
+
+function checkAction(obj) {
+  // Not the best practice...
+  console.log('action', action.value)
+
+  if (action.value == 'Adicionar') {
+    addDoctor(obj)
+  }
+}
 
 </script>
 
@@ -70,11 +97,9 @@ const doctor = reactive(
       </li>
     </div>
 
-
     <div>
-      <DoctorForm :label="action" v-model="doctor" />
+      <DoctorForm :label="action" v-model="doctor" @response="(obj) => checkAction(obj)" />
     </div>
-
   </div>
 </template>
 
@@ -84,8 +109,6 @@ const doctor = reactive(
     display: flex;
     flex-direction: column;
     gap: 30px;
-
-
   }
 }
 </style>

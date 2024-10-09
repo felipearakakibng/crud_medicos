@@ -10,19 +10,17 @@ const props = defineProps({
 })
 
 const doctor = defineModel({
-    type: Object as PropType<Doctor>,
-    default: () => ({ nome: '', crm: '', estado: '', situacao: '' })
+  type: Object as PropType<Doctor>,
+  default: () => ({ nome: '', crm: '', estado: '', situacao: '' })
 })
 
+const emit = defineEmits(['response'])
 
-function onSubmit() {
-  doctors.push(doctor)
-}
 </script>
 
 <template>
   <div class="form">
-    <span>bananananaodcjaljcdlcjdslcjcdsncln</span>
+    <!-- Trocar por form -->
     <span>{{ props.label }} médico:</span>
     <span>{{ doctor }}</span>
     <span>Nome: <input v-model="doctor.nome" placeholder="Digite o nome"></span>
@@ -30,7 +28,7 @@ function onSubmit() {
     <span>Estado: <input v-model="doctor.estado" placeholder="Digite o nome"></span>
     <span>Situação: <input v-model="doctor.situacao" placeholder="Digite o nome"></span>
     
-    <button @click="onSubmit">{{ label }}</button>
+    <button @click="emit('response', doctor)">{{ label }}</button>
   </div>
 </template>
 
