@@ -1,22 +1,5 @@
-<template>
-  <div>
-    <H1>Gestor de médicos</H1>
-    <li v-for="doctor in doctors" :key="doctor">
-      {{ doctor.nome }}
-      {{ doctor.crm }}
-      {{ doctor.estado }}
-      {{ doctor.situacao }}
-    </li>
-  </div>
-
-
-
-  <!-- To do: componentizar o form -->
-  <DoctorForm></DoctorForm>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import DoctorForm from '../components/DoctorForm.vue'
 
 
@@ -61,18 +44,48 @@ const doctors = ref(
   ]
 )
 
+const action = ref("Adicionar")
+
+const doctor = reactive(
+  {
+    nome: "",
+    crm: "",
+    estado: "",
+    situacao: ""
+  }
+)
 
 </script>
 
 
+<template>
+  <div class="container">
+    <div>
+      <H1>Gestor de médicos</H1>
+      <li v-for="doctor in doctors" :key="doctor">
+        {{ doctor.nome }}
+        {{ doctor.crm }}
+        {{ doctor.estado }}
+        {{ doctor.situacao }}
+      </li>
+    </div>
 
+
+    <div>
+      <DoctorForm :label="action" v-model="doctor" />
+    </div>
+
+  </div>
+</template>
 
 <style>
 @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
+  .container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+
+
   }
 }
 </style>
