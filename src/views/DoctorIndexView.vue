@@ -60,7 +60,8 @@ let doctors: Doctor[] = ref(
 )
 
 // Abordar edit
-const action = ref("Adicionar")
+const create = ref("Adicionar")
+const edit = ref("Editar")
 
 const doctor: Doctor = reactive(
   {
@@ -84,6 +85,11 @@ function checkAction(obj) {
   }
 }
 
+function deleteDoctor(id) {
+  console.log('deleteDoctor', id)
+
+}
+
 </script>
 
 
@@ -92,13 +98,16 @@ function checkAction(obj) {
     <div>
       <H1>Gestor de médicos</H1>
       <div>
-        <DoctorForm :label="action" v-model="doctor" @response="(obj) => checkAction(obj)" />
+        <DoctorForm :label="create" v-model="doctor" @response="(obj) => checkAction(obj)" />
       </div>
       <li v-for="doctor in doctors" :key="doctor">
         {{ doctor.nome }}
         {{ doctor.crm }}
         {{ doctor.estado }}
         {{ doctor.situacao }}
+
+        <DoctorForm :label="edit" v-model="doctor.value" @response="(obj) => checkAction(obj)" />
+        <v-btn @click="deleteDoctor(doctor.id)">Deletar</v-btn>
       </li>
     </div>
 

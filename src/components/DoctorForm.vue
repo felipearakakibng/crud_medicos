@@ -10,8 +10,7 @@ const props = defineProps({
 })
 
 const doctor = defineModel({
-  type: Object as PropType<Doctor>,
-  default: () => ({ nome: '', crm: '', estado: '', situacao: '' })
+  type: Object as PropType<Doctor>
 })
 
 const emit = defineEmits(['response'])
@@ -40,9 +39,9 @@ function clearFields() {
       >
         <h2>{{ props.label }} médico</h2>
         <span>Nome: <input v-model="doctor.nome" placeholder="Digite o nome"></span>
-        <span>CRM: <input v-model="doctor.crm" placeholder="Digite o nome"></span>
-        <span>Estado: <input v-model="doctor.estado" placeholder="Digite o nome"></span>
-        <span>Situação: <input v-model="doctor.situacao" placeholder="Digite o nome"></span>
+        <span>CRM: <input v-model="doctor.crm" placeholder="Digite o CRM"></span>
+        <span>Estado: <input v-model="doctor.estado" placeholder="Digite o estado"></span>
+        <span>Situação: <input v-model="doctor.situacao" placeholder="Digite a situação"></span>
 
         <template v-slot:actions>
           <v-btn
