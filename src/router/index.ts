@@ -6,7 +6,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'doctors',
-      component: () => import('../views/DoctorView.vue')
+      component: () => import('../views/DoctorIndexView.vue')
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: () => import('../views/DoctorCreateView.vue')
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: () => import('../views/DoctorEditView.vue')
     }
   ]
 })

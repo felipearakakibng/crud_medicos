@@ -2,6 +2,8 @@
 import { reactive, ref } from 'vue'
 import DoctorForm from '../components/DoctorForm.vue'
 
+
+
 interface Doctor {
   nome: string
   crm: number
@@ -60,7 +62,7 @@ let doctors: Doctor[] = ref(
 // Abordar edit
 const action = ref("Adicionar")
 
-const doctor = reactive(
+const doctor: Doctor = reactive(
   {
     nome: "",
     crm: "",
@@ -82,6 +84,7 @@ function checkAction(obj) {
   }
 }
 
+let showDialog = false
 </script>
 
 
@@ -89,6 +92,7 @@ function checkAction(obj) {
   <div class="container">
     <div>
       <H1>Gestor de médicos</H1>
+      <button @click="showDialog = true, console.log(showDialog)">Adicionar</button>
       <li v-for="doctor in doctors" :key="doctor">
         {{ doctor.nome }}
         {{ doctor.crm }}
@@ -97,8 +101,9 @@ function checkAction(obj) {
       </li>
     </div>
 
+
     <div>
-      <DoctorForm :label="action" v-model="doctor" @response="(obj) => checkAction(obj)" />
+      <DoctorForm :label="action" v-if="showDialog" v-model="doctor" @response="(obj) => checkAction(obj)" />
     </div>
   </div>
 </template>
