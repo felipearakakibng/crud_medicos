@@ -1,10 +1,12 @@
 <script setup lang="ts">
+
 interface Doctor {
   nome: string
   crm: number
   estado: string
   situacao: string
 }
+
 const props = defineProps({
   label: String,
 })
@@ -16,7 +18,9 @@ const doctor = defineModel({
 const emit = defineEmits(['response'])
 
 function clearFields() {
-  doctor.value = { nome: '', crm: '', estado: '', situacao: '' }
+  if (props.label == 'create') {
+    doctor.value = { nome: '', crm: '', estado: '', situacao: '' }
+  }
 }
 
 </script>
@@ -47,7 +51,7 @@ function clearFields() {
           <v-btn
             class="ml-auto"
             text="Salvar"
-            @click="isActive.value = false; emit('response', doctor); clearFields()"
+            @click="isActive.value = false; emit('response'); clearFields();"
           ></v-btn>
         </template>
       </v-card>

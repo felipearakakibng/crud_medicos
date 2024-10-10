@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import DoctorForm from '../components/DoctorForm.vue'
-
-// components() = { DoctorForm }
 
 interface Doctor {
   nome: string
@@ -11,59 +9,48 @@ interface Doctor {
   situacao: string
 }
 
-let id = 0
 let doctors: Doctor[] = ref(
   [
-    {
-      id: id++,
+    ref({
       nome: "Antônio Silva",
       crm: 123456,
       estado: 'SP',
       situacao: 'Ativo'
-    },
-    {
-      id: id++,
+    }),
+    ref({
       nome: "Juliana Cardos",
       crm: 222222,
       estado: 'RJ',
       situacao: 'Inativo'
-    },
-    {
-      id: id++,
+    }),
+    ref({
       nome: "Helena Couto",
       crm: 333333,
       estado: 'BA',
       situacao: 'Ativo'
-    },
-    {
-      id: id++,
+    }),
+    ref({
       nome: "Eduardo Prado",
       crm: 444444,
       estado: 'CE',
       situacao: 'Inativo'
-    },
-    {
-      id: id++,
+    }),
+    ref({
       nome: "Maria Laura",
       crm: 555555,
       estado: 'MA',
       situacao: 'Ativo'
-    },
-    {
-      id: id++,
+    }),
+    ref({
       nome: "Pedro Arantes",
       crm: 777777,
       estado: 'SC',
       situacao: 'Ativo'
-    }
+    })
   ]
 )
 
-// Abordar edit
-const create = ref("Adicionar")
-const edit = ref("Editar")
-
-const doctor: Doctor = reactive(
+let newDoctor: Doctor = ref(
   {
     nome: "",
     crm: "",
@@ -72,21 +59,17 @@ const doctor: Doctor = reactive(
   }
 )
 
-function addDoctor(obj) {
-  doctors.value.push(obj)
+const create = ref("Adicionar")
+const edit = ref("Editar")
+
+function addDoctor() {
+  const clone = ref(Object.assign({}, newDoctor.value))
+  doctors.value.push(clone)
+  newDoctor.value = { nome: '', crm: '', estado: '', situacao: '' }
 }
 
-function checkAction(obj) {
-  // Not the best practice...
-  console.log('action', action.value)
-
-  if (action.value == 'Adicionar') {
-    addDoctor(obj)
-  }
-}
-
-function deleteDoctor(id) {
-  console.log('deleteDoctor', id)
+function deleteDoctor(index) {
+  console.log('deleteDoctor', index)
 
 }
 
@@ -98,21 +81,19 @@ function deleteDoctor(id) {
     <div>
       <H1>Gestor de médicos</H1>
       <div>
-        <DoctorForm :label="create" v-model="doctor" @response="(obj) => checkAction(obj)" />
+        <DoctorForm :label="create" v-model="newDoctor" @response="() => addDoctor()" />
       </div>
-      <li v-for="doctor in doctors" :key="doctor">
-        {{ doctor.nome }}
-        {{ doctor.crm }}
-        {{ doctor.estado }}
-        {{ doctor.situacao }}
-
-        <DoctorForm :label="edit" v-model="doctor.value" @response="(obj) => checkAction(obj)" />
-        <v-btn @click="deleteDoctor(doctor.id)">Deletar</v-btn>
-      </li>
+      <ul v-if="doctors && doctors.length">
+        <li v-for="(doctor, index) in doctors" :key="doctor">
+          {{ doctor.value.nome }}
+          {{ doctor.value.crm }}
+          {{ doctor.value.estado }}
+          {{ doctor.value.situacao }}
+          <DoctorForm :label="edit" v-model="doctor.value" />
+          <v-btn @click="deleteDoctor(index)">Deletar</v-btn>
+        </li>
+      </ul>
     </div>
-
-
-
   </div>
 </template>
 
