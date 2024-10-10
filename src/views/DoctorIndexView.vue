@@ -69,8 +69,7 @@ function addDoctor() {
 }
 
 function deleteDoctor(index) {
-  console.log('deleteDoctor', index)
-
+  doctors.value.splice(index, 1)
 }
 
 </script>
