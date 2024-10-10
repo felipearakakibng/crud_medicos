@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import DoctorForm from '../components/DoctorForm.vue'
-
 interface Doctor {
   nome: string
   crm: number
@@ -9,8 +8,30 @@ interface Doctor {
   situacao: string
 }
 
-let doctors: Doctor[] = ref(
-  [
+const create = ref("Adicionar")
+const edit = ref("Editar")
+let doctors: Doctor[] = ref([])
+let newDoctor: Doctor = ref(
+  {
+    nome: "",
+    crm: "",
+    estado: "",
+    situacao: ""
+  }
+)
+
+function addDoctor() {
+  const clone = ref(Object.assign({}, newDoctor.value))
+  doctors.value.push(clone)
+  newDoctor.value = { nome: '', crm: '', estado: '', situacao: '' }
+}
+
+function deleteDoctor(index) {
+  doctors.value.splice(index, 1)
+}
+
+onMounted(() => {
+  doctors.value = [
     ref({
       nome: "Antônio Silva",
       crm: 123456,
@@ -48,32 +69,8 @@ let doctors: Doctor[] = ref(
       situacao: 'Ativo'
     })
   ]
-)
-
-let newDoctor: Doctor = ref(
-  {
-    nome: "",
-    crm: "",
-    estado: "",
-    situacao: ""
-  }
-)
-
-const create = ref("Adicionar")
-const edit = ref("Editar")
-
-function addDoctor() {
-  const clone = ref(Object.assign({}, newDoctor.value))
-  doctors.value.push(clone)
-  newDoctor.value = { nome: '', crm: '', estado: '', situacao: '' }
-}
-
-function deleteDoctor(index) {
-  doctors.value.splice(index, 1)
-}
-
+})
 </script>
-
 
 <template>
   <div class="container">

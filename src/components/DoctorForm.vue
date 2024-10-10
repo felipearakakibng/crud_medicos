@@ -22,7 +22,6 @@ function clearFields() {
     doctor.value = { nome: '', crm: '', estado: '', situacao: '' }
   }
 }
-
 </script>
 
 <template>
@@ -36,7 +35,6 @@ function clearFields() {
         {{ props.label }} médico
       </v-btn>
     </template>
-
     <template v-slot:default="{ isActive }">
       <v-card
         prepend-icon="mdi-package"
@@ -46,7 +44,6 @@ function clearFields() {
         <span>CRM: <input v-model="doctor.crm" placeholder="Digite o CRM"></span>
         <span>Estado: <input v-model="doctor.estado" placeholder="Digite o estado"></span>
         <span>Situação: <input v-model="doctor.situacao" placeholder="Digite a situação"></span>
-
         <template v-slot:actions>
           <v-btn
             class="ml-auto"
@@ -58,9 +55,6 @@ function clearFields() {
     </template>
   </v-dialog>
 </template>
-
-
-
 
 <style scoped>
 .form {
