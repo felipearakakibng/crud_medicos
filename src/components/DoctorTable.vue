@@ -1,16 +1,16 @@
 <script setup>
-  import { nextTick, ref, watch, onMounted } from 'vue'
+  import { nextTick, ref, reactive, watch, onMounted } from 'vue'
   
   const emit = defineEmits(['response'])
   const dialog = ref(false)
   const dialogDelete = ref(false)
   let deleteObjectInfo = ref()
-  const model = defineModel()
-  const headers = ref(model.value.headers)
   const editedIndex = ref(-1)
-  const editedItem = ref(model.value.editedItem)
-  const defaultItem = ref(model.value.defaultItem)
-  const collection = ref(model.value.collection)
+  const model = defineModel()
+  let headers = reactive(model.value.headers)
+  let editedItem = reactive(model.value.editedItem)
+  let defaultItem = reactive(model.value.defaultItem)
+  let collection = reactive(model.value.collection)
   let formTitle = ref()
   function setTitle(create) {
     if (create) {
@@ -23,42 +23,42 @@
   }
   function editItem (item) {
     setTitle()
-    editedIndex.value = collection.value.indexOf(item)
-    editedItem.value = Object.assign({}, item)
+    editedIndex.value = collection.indexOf(item)
+    editedItem = Object.assign({}, item)
     dialog.value = true
   }
   function deleteItem (item) {
-    editedIndex.value = collection.value.indexOf(item)
-    editedItem.value = Object.assign({}, item)
+    editedIndex.value = collection.indexOf(item)
+    editedItem = Object.assign({}, item)
     dialogDelete.value = true
     deleteObjectInfo.value = item.nome + ` (CRM: ${item.crm})`
   }
   function deleteItemConfirm () {
-    collection.value.splice(editedIndex.value, 1)
+    collection.splice(editedIndex.value, 1)
     emit('response')
     closeDelete()
   }
   function close () {
     dialog.value = false
     nextTick(() => {
-      editedItem.value = Object.assign({}, defaultItem.value)
+      editedItem = Object.assign({}, defaultItem)
       editedIndex.value = -1
     })
   }
   function closeDelete () {
     dialogDelete.value = false
     nextTick(() => {
-      editedItem.value = Object.assign({}, defaultItem.value)
+      editedItem = Object.assign({}, defaultItem)
       editedIndex.value = -1
     })
   }
   function save () {
     if (editedIndex.value > -1) {
       // Edit
-      Object.assign(collection.value[editedIndex.value], editedItem.value)
+      Object.assign(collection[editedIndex.value], editedItem)
     } else {
       // Create
-      collection.value.push(editedItem.value)
+      collection.push(editedItem)
     }
     emit('response')
     close()

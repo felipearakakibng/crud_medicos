@@ -60,7 +60,7 @@
         sortable: false
       }
     ],
-    editItem: {
+    editedItem: {
       name: '',
       crm: '',
       estado: '',
