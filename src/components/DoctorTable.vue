@@ -19,40 +19,40 @@
       formTitle.value = 'Editar médico'
     }
   }
-  function initialize () {
+  function initialize() {
   }
-  function editItem (item) {
+  function editItem(item) {
     setTitle()
     editedIndex.value = collection.indexOf(item)
     editedItem = Object.assign({}, item)
     dialog.value = true
   }
-  function deleteItem (item) {
+  function deleteItem(item) {
     editedIndex.value = collection.indexOf(item)
     editedItem = Object.assign({}, item)
     dialogDelete.value = true
     deleteObjectInfo.value = item.nome + ` (CRM: ${item.crm})`
   }
-  function deleteItemConfirm () {
+  function deleteItemConfirm() {
     collection.splice(editedIndex.value, 1)
     emit('response')
     closeDelete()
   }
-  function close () {
+  function close() {
     dialog.value = false
     nextTick(() => {
       editedItem = Object.assign({}, defaultItem)
       editedIndex.value = -1
     })
   }
-  function closeDelete () {
+  function closeDelete() {
     dialogDelete.value = false
     nextTick(() => {
       editedItem = Object.assign({}, defaultItem)
       editedIndex.value = -1
     })
   }
-  function save () {
+  function save() {
     if (editedIndex.value > -1) {
       // Edit
       Object.assign(collection[editedIndex.value], editedItem)
@@ -63,12 +63,6 @@
     emit('response')
     close()
   }
-  watch(dialog, val => {
-    val || close()
-  })
-  watch(dialogDelete, val => {
-    val || closeDelete()
-  })
 
   onMounted(() => {
     initialize()
