@@ -29,8 +29,6 @@ async function getValidateMessage(item) {
 function initialize() {}
 async function editItem(item) {
   getValidateMessage(item).then((data) => {
-    // debugger // eslint-disable-line
-    console.log('editItem', 'data', data)
     validateMessage = data.data
     dialog.value = true
   })
@@ -83,7 +81,11 @@ onMounted(() => {
 
 <template>
   <slot>
-    <v-data-table :headers="headers" :items="collection" :sort-by="[{ key: 'nome', order: 'asc' }]">
+    <v-data-table
+      :headers="headers"
+      :items="collection"
+      :sort-by="[{ key: 'doctorName', order: 'asc' }]"
+    >
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title style="flex: auto">Gestor de médicos</v-toolbar-title>
@@ -125,7 +127,7 @@ onMounted(() => {
                         label="Especialidades"
                       ></v-text-field>
                     </v-col>
-                    {{ validateMessage }}
+                    <span v-if="formTitle.value == 'Visualizar médico'">{{ validateMessage }}</span>
                   </v-row>
                 </v-container>
               </v-card-text>

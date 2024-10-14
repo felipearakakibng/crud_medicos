@@ -2,7 +2,59 @@ import axios from 'axios'
 
 export default class DoctorService {
   data: any
-  constructor() {}
+  doctors: any[]
+  constructor() {
+    this.doctors = [
+      {
+        doctorName: 'Antônio Silva',
+        crm: 123456,
+        crmUf: 'SP',
+        status: 'Ativo',
+        type: 'Principal',
+        specialties: ''
+      },
+      {
+        doctorName: 'Juliana Cardoso',
+        crm: 222222,
+        crmUf: 'RJ',
+        status: 'Cancelado',
+        type: 'Principal',
+        specialties: ''
+      },
+      {
+        doctorName: 'Helena Couto',
+        crm: 333333,
+        crmUf: 'BA',
+        status: 'Ativo',
+        type: 'Principal',
+        specialties: ''
+      },
+      {
+        doctorName: 'Eduardo Prado',
+        crm: 444444,
+        crmUf: 'CE',
+        status: 'Cancelado',
+        type: 'Principal',
+        specialties: ''
+      },
+      {
+        doctorName: 'Maria Laura',
+        crm: 555555,
+        crmUf: 'MA',
+        status: 'Ativo',
+        type: 'Principal',
+        specialties: ''
+      },
+      {
+        doctorName: 'Pedro Arantes',
+        crm: 777777,
+        crmUf: 'SC',
+        status: 'Ativo',
+        type: 'Principal',
+        specialties: ''
+      }
+    ]
+  }
 
   async create(data: any): Promise<any> {
     this.data = data
@@ -16,11 +68,13 @@ export default class DoctorService {
     const response = await axios
       .request(options)
       .then(function (data) {
-        console.log('then', data)
+        console.log('then', data.data.message)
 
-        alert(data)
+        alert(data.data.message)
       })
       .catch(function (error) {
+        console.log('error', error)
+
         alert(error)
       })
 
@@ -52,5 +106,9 @@ export default class DoctorService {
     console.log('response', response)
 
     return response
+  }
+
+  index() {
+    return this.doctors
   }
 }

@@ -1,55 +1,22 @@
 <script setup>
 import { reactive } from 'vue'
 import DoctorTable from '../components/DoctorTable.vue'
+import DoctorService from '@/Network/Services/DoctorService'
 
+const doctorService = new DoctorService()
 const doctors = reactive({
-  collection: [
-    {
-      nome: 'Antônio Silva',
-      crm: 123456,
-      estado: 'SP',
-      situacao: 'Ativo'
-    },
-    {
-      nome: 'Juliana Cardos',
-      crm: 222222,
-      estado: 'RJ',
-      situacao: 'Inativo'
-    },
-    {
-      nome: 'Helena Couto',
-      crm: 333333,
-      estado: 'BA',
-      situacao: 'Ativo'
-    },
-    {
-      nome: 'Eduardo Prado',
-      crm: 444444,
-      estado: 'CE',
-      situacao: 'Inativo'
-    },
-    {
-      nome: 'Maria Laura',
-      crm: 555555,
-      estado: 'MA',
-      situacao: 'Ativo'
-    },
-    {
-      nome: 'Pedro Arantes',
-      crm: 777777,
-      estado: 'SC',
-      situacao: 'Ativo'
-    }
-  ],
+  collection: doctorService.index(),
   headers: [
     {
       title: 'Nome',
       key: 'nome'
     },
     { title: 'CRM', key: 'crm' },
-    { title: 'Estado', key: 'estado' },
-    { title: 'Situação', key: 'situacao' },
-    { title: 'Actions', key: 'actions', sortable: false }
+    { title: 'Estado', key: 'crmUf' },
+    { title: 'Status', key: 'status' },
+    { title: 'Type', key: 'type' },
+    { title: 'Especialidades', key: 'specialties' },
+    { title: 'Ações', key: 'actions', sortable: false }
   ],
   editedItem: {
     doctorName: '',
@@ -71,7 +38,7 @@ const doctors = reactive({
 </script>
 
 <template>
-  <DoctorTable v-model="doctors" @response="() => console.log(doctors)"></DoctorTable>
+  <DoctorTable v-model="doctors"></DoctorTable>
 </template>
 
 <style></style>
