@@ -9,12 +9,12 @@ const doctors = reactive({
   headers: [
     {
       title: 'Nome',
-      key: 'nome'
+      key: 'doctorName'
     },
     { title: 'CRM', key: 'crm' },
     { title: 'Estado', key: 'crmUf' },
     { title: 'Status', key: 'status' },
-    { title: 'Type', key: 'type' },
+    { title: 'Tipo', key: 'type' },
     { title: 'Especialidades', key: 'specialties' },
     { title: 'Ações', key: 'actions', sortable: false }
   ],

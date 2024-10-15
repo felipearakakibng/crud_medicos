@@ -56,7 +56,7 @@ export default class DoctorService {
     ]
   }
 
-  async create(data: any): Promise<any> {
+  create(data: any) {
     this.data = data
     const options = {
       method: 'POST',
@@ -65,20 +65,14 @@ export default class DoctorService {
       data: this.data
     }
 
-    const response = await axios
+    const response = axios
       .request(options)
-      .then(function (data) {
-        console.log('then', data.data.message)
-
+      .then((data) => {
         alert(data.data.message)
       })
-      .catch(function (error) {
-        console.log('error', error)
-
+      .catch((error) => {
         alert(error)
       })
-
-    // debugger // eslint-disable-line
 
     return response
   }
@@ -92,18 +86,13 @@ export default class DoctorService {
       params: this.data
     }
 
-    console.log('validate', 'options', options)
-
     let response
     try {
       response = await axios.request(options)
-
-      alert(response.data.status)
+      alert(response.status + ' ' + response.statusText)
     } catch (e) {
       alert(e)
     }
-    // debugger // eslint-disable-line
-    console.log('response', response)
 
     return response
   }

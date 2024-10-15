@@ -27,12 +27,15 @@ async function getValidateMessage(item) {
   return await doctorService.validate(item)
 }
 function initialize() {}
-async function editItem(item) {
+
+let showTitle
+function editItem(item) {
+  setTitle()
   getValidateMessage(item).then((data) => {
     validateMessage = data.data
+    showTitle = true
     dialog.value = true
   })
-  setTitle()
   editedIndex.value = collection.indexOf(item)
   editedItem = Object.assign({}, item)
 }
@@ -127,7 +130,7 @@ onMounted(() => {
                         label="Especialidades"
                       ></v-text-field>
                     </v-col>
-                    <span v-if="formTitle.value == 'Visualizar médico'">{{ validateMessage }}</span>
+                    <span v-if="showTitle">{{ validateMessage }}</span>
                   </v-row>
                 </v-container>
               </v-card-text>
