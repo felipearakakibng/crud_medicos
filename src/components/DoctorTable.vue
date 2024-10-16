@@ -1,6 +1,6 @@
 <script setup>
-import DoctorService from '@/Network/Services/DoctorService'
 import { nextTick, ref, reactive, onMounted } from 'vue'
+import { useDoctorStore } from '@/pinia-store/useDoctorStore'
 
 const emit = defineEmits(['response'])
 const dialog = ref(false)
@@ -13,7 +13,7 @@ let editedItem = reactive(model.value.editedItem)
 let defaultItem = reactive(model.value.defaultItem)
 let collection = reactive(model.value.collection)
 let formTitle = ref()
-const doctorService = new DoctorService()
+const doctorStore = useDoctorStore()
 let validateMessage
 
 function setTitle(create) {
@@ -24,7 +24,7 @@ function setTitle(create) {
   }
 }
 async function getValidateMessage(item) {
-  return await doctorService.validate(item)
+  return await doctorStore.validate(item)
 }
 function initialize() {}
 
@@ -71,7 +71,7 @@ function save() {
   } else {
     // Create
     collection.push(editedItem)
-    doctorService.create(editedItem)
+    doctorStore.create(editedItem)
   }
   emit('response')
   close()
