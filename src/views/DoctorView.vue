@@ -38,6 +38,7 @@ const doctors = reactive({
 </script>
 
 <template>
+  <router-link to="/">Voltar</router-link>
   <DoctorTable v-model="doctors"></DoctorTable>
 </template>
 
